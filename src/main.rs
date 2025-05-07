@@ -1,5 +1,5 @@
 use clap::Parser;
-use serde::{Serialize, Deserialize};
+use rust_todo::Todo;
 use std::fs::{self, File};
 use std::io::{self, Write};
 
@@ -35,33 +35,6 @@ enum Command {
     Erase,
     /// clear all todos
     Clear,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Todo {
-    item: String,
-    id: usize,
-    done: bool,
-}
-impl Todo {
-    fn new(item: String, id: usize) -> Self {
-        Self { item, id, done: false }
-    }
-    fn mark_done(&mut self) {
-        self.done = true;
-    }
-    fn mark_undone(&mut self) {
-        self.done = false;
-    }
-    fn to_string(&self) -> String {
-        if self.done {
-            // Apply strike-through effect
-            let crossed: String = self.item.chars().flat_map(|c| [c, '\u{0336}']).collect();
-            format!("{} {}", self.id, crossed)
-        } else {
-            format!("{} {}",self.id, self.item)
-        }
-    }
 }
 
 fn save_todos(todos: &Vec<Todo>, file_path: &str) -> io::Result<()> {
