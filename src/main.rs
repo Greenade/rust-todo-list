@@ -114,7 +114,7 @@ fn main() {
             todos.retain(|todo| !todo.done); // Remove all done todos
             // Update IDs after removing done todos
             for (i, todo) in todos.iter_mut().enumerate() {
-                todo.id = i;
+                todo.id = i + 1;
             }
             save_todos(&todos, file_path).expect("Failed to save todos");
             println!("Erased all done todos");
